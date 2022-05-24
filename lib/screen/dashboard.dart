@@ -116,64 +116,63 @@ class _DashboardState extends State<Dashboard> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),
-          child: Flexible(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Image.network(
-                    item.strDrinkThumb!,
-                    height: 122,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: Image.network(
+                  item.strDrinkThumb!,
+                  height: 122,
+                ),
+              ),
+              Flexible(
+                fit: FlexFit.tight,
+                child: Container(
+                  margin: const EdgeInsets.only(
+                      left: 8, right: 8, bottom: 5),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        item.strDrink!,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 19),
+                      ),
+                      Text(
+                        "(${item.strCategory})",
+                        style: const TextStyle(
+                            fontSize: 11, color: Colors.grey),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text("Glass: ${item.strGlass}"),
+                      const SizedBox(
+                        height: 2,
+                      ),
+                      Text("Alcoholic: ${item.strAlcoholic}"),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Text(
+                        "${item.strInstructions}",
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 3,
+                        style: const TextStyle(
+                          fontSize: 11,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                Flexible(
-                  fit: FlexFit.tight,
-                  child: Container(
-                    margin: const EdgeInsets.only(
-                        left: 8, right: 8, bottom: 5),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          item.strDrink!,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 19),
-                        ),
-                        Text(
-                          "(${item.strCategory})",
-                          style: const TextStyle(
-                              fontSize: 11, color: Colors.grey),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Text("Glass: ${item.strGlass}"),
-                        const SizedBox(
-                          height: 2,
-                        ),
-                        Text("Alcoholic: ${item.strAlcoholic}"),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        Text(
-                          "${item.strInstructions}",
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 3,
-                          style: const TextStyle(
-                            fontSize: 11,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
-          )),
+              )
+            ],
+          )
+      ),
     );
   }
   Widget _buildLoading() => const Center(child: CircularProgressIndicator());
