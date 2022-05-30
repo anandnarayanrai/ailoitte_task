@@ -1,4 +1,5 @@
 import 'package:ailoitte_task/blocs/dashboard_bloc/dashboard_bloc.dart';
+import 'package:ailoitte_task/models/drinks.dart';
 import 'package:ailoitte_task/models/rum_model.dart';
 import 'package:ailoitte_task/screen/detail.dart';
 import 'package:flutter/material.dart';
@@ -45,41 +46,41 @@ class _DashboardState extends State<Dashboard> {
           ),
           Expanded(
               child: Container(
-                margin: const EdgeInsets.all(8.0),
-                child: BlocProvider(
-                  create: (_) => _newsBloc,
-                  child: BlocListener<DashboardBloc, DashboardState>(
-                    listener: (context, state) {
-                      if (state is DashboardError) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(state.message!),
-                          ),
-                        );
-                      }
-                    },
-                    child: BlocBuilder<DashboardBloc, DashboardState>(
-                      builder: (context, state) {
-                        if (state is DashboardInitial) {
-                          return _buildLoading();
-                        } else if (state is DashboardLoading) {
-                          return _buildLoading();
-                        } else if (state is DashboardLoaded) {
-                          return _buildCard(context, state.rumModel);
-                        } else if (state is DashboardError) {
-                          return const Center(
-                            child: Text("Server Error"),
-                          );
-                        } else {
-                          return const Center(
-                            child: Text("Something went wrong"),
-                          );
-                        }
-                      },
-                    ),
-                  ),
+            margin: const EdgeInsets.all(8.0),
+            child: BlocProvider(
+              create: (_) => _newsBloc,
+              child: BlocListener<DashboardBloc, DashboardState>(
+                listener: (context, state) {
+                  if (state is DashboardError) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(state.message!),
+                      ),
+                    );
+                  }
+                },
+                child: BlocBuilder<DashboardBloc, DashboardState>(
+                  builder: (context, state) {
+                    if (state is DashboardInitial) {
+                      return _buildLoading();
+                    } else if (state is DashboardLoading) {
+                      return _buildLoading();
+                    } else if (state is DashboardLoaded) {
+                      return _buildCard(context, state.rumModel);
+                    } else if (state is DashboardError) {
+                      return const Center(
+                        child: Text("Server Error"),
+                      );
+                    } else {
+                      return const Center(
+                        child: Text("Something went wrong"),
+                      );
+                    }
+                  },
                 ),
-              ))
+              ),
+            ),
+          ))
         ],
       ),
     );
@@ -88,25 +89,26 @@ class _DashboardState extends State<Dashboard> {
   Widget _buildCard(BuildContext context, RumModel model) {
     return model.drinks!.isNotEmpty
         ? ListView.builder(
-      itemCount: model.drinks!.length,
-      itemBuilder: (context, index) {
-        Drinks item = model.drinks![index];
-        return InkWell(
-          onTap: () {
-            Navigator.of(context).push(_createRoute(item));
-          },
-          child: listItem(item),
-        );
-      },
-    )
-        : Center(
-        child: Column(
-          children: [
-            Lottie.network(
-                'https://raw.githubusercontent.com/xvrh/lottie-flutter/master/example/assets/Mobilo/A.json'),
-            const Text("Data not found"),
-          ],
-        ));
+            itemCount: model.drinks!.length,
+            itemBuilder: (context, index) {
+              Drinks item = model.drinks![index];
+              return InkWell(
+                onTap: () {
+                  Navigator.of(context).push(_createRoute(item));
+                },
+                child: listItem(item),
+              );
+            },
+          )
+        : Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Lottie.network(
+                  'https://raw.githubusercontent.com/xvrh/lottie-flutter/master/example/assets/Mobilo/A.json'),
+              const Text("Data not found"),
+            ],
+          );
   }
 
   Widget listItem(Drinks item) {
@@ -123,29 +125,27 @@ class _DashboardState extends State<Dashboard> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: Image.network(
-                  item.strDrinkThumb!,
+                  item.strDrinkThumb,
                   height: 122,
                 ),
               ),
               Flexible(
                 fit: FlexFit.tight,
                 child: Container(
-                  margin: const EdgeInsets.only(
-                      left: 8, right: 8, bottom: 5),
+                  margin: const EdgeInsets.only(left: 8, right: 8, bottom: 5),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        item.strDrink!,
+                        item.strDrink,
                         style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 19),
+                            fontWeight: FontWeight.bold, fontSize: 19),
                       ),
                       Text(
                         "(${item.strCategory})",
-                        style: const TextStyle(
-                            fontSize: 11, color: Colors.grey),
+                        style:
+                            const TextStyle(fontSize: 11, color: Colors.grey),
                       ),
                       const SizedBox(
                         height: 5,
@@ -171,18 +171,17 @@ class _DashboardState extends State<Dashboard> {
                 ),
               )
             ],
-          )
-      ),
+          )),
     );
   }
+
   Widget _buildLoading() => const Center(child: CircularProgressIndicator());
 
   Route _createRoute(Drinks drinks) {
     return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) =>
-          Detail(
-            drinks: drinks,
-          ),
+      pageBuilder: (context, animation, secondaryAnimation) => Detail(
+        drinks: drinks,
+      ),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         return child;
       },

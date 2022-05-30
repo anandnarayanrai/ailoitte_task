@@ -1,4 +1,4 @@
-import 'package:ailoitte_task/models/rum_model.dart';
+import 'package:ailoitte_task/models/drinks.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -6,10 +6,8 @@ class Detail extends StatelessWidget {
   Detail({Key? key, required this.drinks}) : super(key: key);
   Drinks drinks;
 
-  TextStyle richTextHeader= const TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 20,
-      color: Colors.green);
+  TextStyle richTextHeader = const TextStyle(
+      fontWeight: FontWeight.bold, fontSize: 20, color: Colors.green);
 
   TextStyle richTextChild= const TextStyle(
   fontSize: 14, color: Colors.black87);
@@ -18,7 +16,7 @@ class Detail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(drinks.strDrink!),
+          title: Text(drinks.strDrink),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -34,11 +32,13 @@ class Detail extends StatelessWidget {
                     child: AspectRatio(
                       aspectRatio: 16.9,
                       child: Image.network(
-                        drinks.strDrinkThumb!,
+                        drinks.strDrinkThumb,
                         fit: BoxFit.fitWidth,
                       ),
                     ),
                   ),
+
+                  ///jeson_shr, jso_ano
                   Positioned(
                     bottom: 0,
                     left: 0,
@@ -63,13 +63,13 @@ class Detail extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              drinks.strDrink!,
+                              drinks.strDrink,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                   fontSize: 40, fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              "(${drinks.strCategory!})",
+                              "(${drinks.strCategory})",
                               style: const TextStyle(color: Colors.black),
                             )
                           ],
